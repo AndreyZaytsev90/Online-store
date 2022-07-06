@@ -5,8 +5,37 @@ function App() {
     return (
         <div className="wrapper clear">
             <div className="overlay">
-                <div className="drawer"></div>
-                {/*35.44*/}
+                <div className="drawer">
+                    <h2 className={"mb-30"}>Корзина</h2>
+
+                    <div className="cartItem d-flex align-center mb-30">
+                        <img className={"mr-20"}
+                             width={90}
+                             height={90}
+                             src="/cakes/praha.jpg"
+                             alt="Прага"/>
+                        <div className={"mr-20 mb-15"}>
+                            <p className={"mb-5"}>Прага</p>
+                            <b>3299 руб.</b>
+                        </div>
+                        <img className={"removeButton"} src="/img/button-remove.svg" alt="remove"/>
+                    </div>
+
+                    <div className="cartItem d-flex align-center">
+                        <img className={"mr-20"}
+                             width={90}
+                             height={90}
+                             src="/cakes/snikers.jpg"
+                             alt="Прага"/>
+                        <div className={"mr-20 mb-15"}>
+                            <p className={"mb-5"}>Сникерс</p>
+                            <b>3299 руб.</b>
+                        </div>
+                        <img className={"removeButton"} src="/img/button-remove.svg" alt="remove"/>
+                    </div>
+
+                </div>
+
             </div>
 
 
