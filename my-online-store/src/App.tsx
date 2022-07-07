@@ -42,7 +42,8 @@ function App() {
                             title={cake.title}
                             price={cake.price}
                             imageUrl={cake.imageUrl}
-                            onClick={() => console.log(cake)}
+                            onClickFavorite={() => console.log("Добавить в закладки")}
+                            onClickPlus={() => console.log("Добавить в корзину")}
                         />)}
 
                     {/* <div className={"card"}>
@@ -99,3 +100,5 @@ function App() {
 }
 
 export default App;
+
+//4 урок 31:45
