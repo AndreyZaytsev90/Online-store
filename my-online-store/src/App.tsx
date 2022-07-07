@@ -1,22 +1,24 @@
 import React from 'react';
-import {Card} from "./components/Card";
+import {Card} from "./components/Card/Card";
 import {Header} from "./components/Header";
 import {Drawer} from "./components/Drawer";
 import Praha from "./cakes/praha.jpg"
-import Snikers from "./cakes/snikers.jpg"
+import Snickers from "./cakes/snikers.jpg"
 import Napoleon from "./cakes/napoleon.jpg"
 import Search from "./img/search.svg"
+import {v1} from "uuid";
 
 type CardsPropsType = {
-    name: string
+    id: string
+    title: string
     price: number
     imageUrl: string
 }
 
 const cards: Array<CardsPropsType> = [
-    {name: "Прага", price: 3299, imageUrl: Praha},
-    {name: "Сникерс", price: 4299, imageUrl: Snikers},
-    {name: "Наполеон", price: 5299, imageUrl: Napoleon},
+    {id: v1(), title: "Прага", price: 3299, imageUrl: Praha},
+    {id: v1(), title: "Сникерс", price: 4299, imageUrl: Snickers},
+    {id: v1(), title: "Наполеон", price: 5299, imageUrl: Napoleon},
 ]
 
 function App() {
@@ -34,7 +36,14 @@ function App() {
                 </div>
                 <div className={"d-flex"}>
 
-                    {cards.map(cake => <Card name={cake.name} price={cake.price} imageUrl={cake.imageUrl}/>)}
+                    {cards.map(cake =>
+                        <Card
+                            key={cake.id}
+                            title={cake.title}
+                            price={cake.price}
+                            imageUrl={cake.imageUrl}
+                            onClick={() => console.log(cake)}
+                        />)}
 
                     {/* <div className={"card"}>
                         <div className={"favorite"}>
