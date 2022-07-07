@@ -2,7 +2,22 @@ import React from 'react';
 import {Card} from "./components/Card";
 import {Header} from "./components/Header";
 import {Drawer} from "./components/Drawer";
+import Praha from "./cakes/praha.jpg"
+import Snikers from "./cakes/snikers.jpg"
+import Napoleon from "./cakes/napoleon.jpg"
+import Search from "./img/search.svg"
 
+type CardsPropsType = {
+    name: string
+    price: number
+    imageUrl: string
+}
+
+const cards: Array<CardsPropsType> = [
+    {name: "Прага", price: 3299, imageUrl: Praha},
+    {name: "Сникерс", price: 4299, imageUrl: Snikers},
+    {name: "Наполеон", price: 5299, imageUrl: Napoleon},
+]
 
 function App() {
     return (
@@ -13,15 +28,13 @@ function App() {
                 <div className={"d-flex align-center justify-between mb-40"}>
                     <h1>Все рецепты</h1>
                     <div className={"search-block d-flex"}>
-                        <img src="/img/search.svg" alt="search"/>
+                        <img src={Search} alt="search"/>
                         <input type="text" placeholder={"Поиск..."}/>
                     </div>
                 </div>
                 <div className={"d-flex"}>
 
-                    <Card name={"Прага"} count={3299}/>
-                    <Card name={"Прага"} count={3299}/>
-                    <Card name={"Прага"} count={3299}/>
+                    {cards.map(cake => <Card name={cake.name} price={cake.price} imageUrl={cake.imageUrl}/>)}
 
                     {/* <div className={"card"}>
                         <div className={"favorite"}>
