@@ -1,21 +1,33 @@
-import React  from 'react';
+import React, {useEffect, useState} from 'react';
 import HeartUnliked from "../../img/heart-unliked.svg"
 import ButtonPlus from "../../img/button+.svg"
+import ButtonChecked from "../../img/button-checked.svg"
 import style from "./Card.module.scss"
 
 type CardPropsType = {
     title: string
     price: number
     imageUrl: string
-    onClickFavorite: () => void
-    onClickPlus: () => void
+    onClickButtonFavorite: () => void
+    onClickButtonPlus: () => void
 }
 
 export const Card = (props: CardPropsType) => {
+
+    const [isAdded, setIsAdded] = useState(false)
+
+    const onClickHandle = () => {
+        setIsAdded(!isAdded)
+    }
+
+    useEffect(() => {
+        console.log("Переменная изменилась")
+    }, [isAdded])
+
     return (
         <div className={style.card}>
             <div className={style.favorite}>
-                <img src={HeartUnliked} alt="heart-unliked" onClick={props.onClickFavorite}/>
+                <img src={HeartUnliked} alt="heart-unliked" onClick={props.onClickButtonFavorite}/>
             </div>
             <img className={"ml-10"} width={133} height={112} src={props.imageUrl} alt="Прага"/>
             <h5>{props.title}</h5>
@@ -24,9 +36,12 @@ export const Card = (props: CardPropsType) => {
                     <span>Цена:</span>
                     <b>{props.price} руб.</b>
                 </div>
-                <button className={"button"} onClick={props.onClickPlus}>
-                    <img width={11} height={11} src={ButtonPlus} alt="+"/>
-                </button>
+                <img
+                    className={style.plus}
+                    onClick={onClickHandle}
+                    src={isAdded ? ButtonChecked : ButtonPlus}
+                    alt="+"
+                />
             </div>
         </div>
     );

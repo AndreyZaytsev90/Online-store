@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Card} from "./components/Card/Card";
 import {Header} from "./components/Header";
 import {Drawer} from "./components/Drawer";
@@ -21,6 +21,10 @@ const cards: Array<CardsPropsType> = [
     {id: v1(), title: "Наполеон", price: 5299, imageUrl: Napoleon},
 ]
 
+const onClickButtonPlus = () => {
+    console.log("Добавить в корзину")
+}
+
 function App() {
     return (
         <div className="wrapper clear">
@@ -42,58 +46,10 @@ function App() {
                             title={cake.title}
                             price={cake.price}
                             imageUrl={cake.imageUrl}
-                            onClickFavorite={() => console.log("Добавить в закладки")}
-                            onClickPlus={() => console.log("Добавить в корзину")}
+                            onClickButtonFavorite={() => console.log("Добавить в закладки")}
+                            onClickButtonPlus={onClickButtonPlus}
                         />)}
-
-                    {/* <div className={"card"}>
-                        <div className={"favorite"}>
-                            <img src="/img/heart-unliked.svg" alt="heart-unliked"/>
-                        </div>
-                        <img width={133} height={112} src="/cakes/praha.jpg" alt="Прага"/>
-                        <h5>Прага</h5>
-                        <div className={"d-flex justify-between align-center"}>
-                            <div className={"d-flex flex-column"}>
-                                <span>Цена:</span>
-                                <b>3299 руб.</b>
-                            </div>
-                            <button className={"button"}>
-                                <img width={11} height={11} src="/img/button+.svg" alt="+"/>
-                            </button>
-                        </div>
-
-                    </div>
-                    <div className={"card"}>
-                        <img width={133} height={112} src="/cakes/snikers.jpg" alt="Прага"/>
-                        <h5>Сникерс</h5>
-                        <div className={"d-flex justify-between align-center"}>
-                            <div className={"d-flex flex-column"}>
-                                <span>Цена:</span>
-                                <b>3299 руб.</b>
-                            </div>
-                            <button className={"button"}>
-                                <img width={11} height={11} src="/img/button+.svg" alt="+"/>
-                            </button>
-                        </div>
-
-                    </div>
-                    <div className={"card"}>
-                        <img width={133} height={112} src="/cakes/napoleon.jpg" alt="Прага"/>
-                        <h5>Наполеон</h5>
-                        <div className={"d-flex justify-between align-center"}>
-                            <div className={"d-flex flex-column"}>
-                                <span>Цена:</span>
-                                <b>3299 руб.</b>
-                            </div>
-                            <button className={"button"}>
-                                <img width={11} height={11} src="/img/button+.svg" alt="+"/>
-                            </button>
-                        </div>
-
-                    </div>*/}
-
                 </div>
-
             </div>
         </div>
     );
@@ -101,4 +57,4 @@ function App() {
 
 export default App;
 
-//4 урок 31:45
+
