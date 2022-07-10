@@ -4,7 +4,11 @@ import Cart from "../img/cart.svg"
 import Like from "../img/like.svg"
 import User from "../img/user.svg"
 
-export const Header = () => {
+type HeaderPropsType = {
+    setCartOpened: () => void
+}
+
+export const Header = (props: HeaderPropsType) => {
     return (
         <header className={"d-flex justify-between align-center p-40"}>
             <div className={"d-flex align-center"}>
@@ -15,7 +19,7 @@ export const Header = () => {
                 </div>
             </div>
             <ul className={"d-flex"}>
-                <li className={"mr-30"}>
+                <li onClick={props.setCartOpened} className={"mr-30 cu-p"}>
                     <img src={Cart} alt="cart"/>
                     <span>3299 руб.</span>
                 </li>
