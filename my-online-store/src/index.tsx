@@ -7,6 +7,7 @@ import 'macro-css' // пакет готовых css решений
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
     <App />

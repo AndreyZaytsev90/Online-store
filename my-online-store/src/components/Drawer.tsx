@@ -1,9 +1,11 @@
 import React from 'react';
 import ButtonRemove from "../img/button-remove.svg"
 import Arrow from "../img/arrow.svg"
+import {CardsPropsType} from "../App";
 
 type DrawerPropsType = {
     onClose: () => void
+    items: Array<CardsPropsType>
 }
 
 export const Drawer = (props: DrawerPropsType) => {
@@ -15,7 +17,7 @@ export const Drawer = (props: DrawerPropsType) => {
                 </h2>
 
                 <div className="items" style={{"flex": 1}}>
-                    <div className="cartItem d-flex align-center mb-30">
+                    {/* <div className="cartItem d-flex align-center mb-30">
                         <img className={"mr-20"}
                              width={90}
                              height={90}
@@ -39,8 +41,22 @@ export const Drawer = (props: DrawerPropsType) => {
                             <b>3299 руб.</b>
                         </div>
                         <img className={"removeButton"} src={ButtonRemove} alt="remove"/>
-                    </div>
+                    </div>*/}
+                    {props.items.map(cake => (
+                        <div className="cartItem d-flex align-center mb-30">
+                            <div
+                                style={{backgroundImage: 'url(/cakes/praha.jpg)'}}
+                                className={"cartItemImg"}></div>
+
+                            <div className={"mr-20 mb-15 flex"}>
+                                <p className={"mb-5"}>Прага</p>
+                                <b>3299 руб.</b>
+                            </div>
+                            <img className={"removeButton"} src={ButtonRemove} alt="remove"/>
+                        </div>
+                    ))}
                 </div>
+
                 <div className={"cartTotalBlock"}>
                     <ul>
                         <li>
