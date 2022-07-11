@@ -1,28 +1,31 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, MouseEvent} from 'react';
 import HeartUnliked from "../../img/heart-unliked.svg"
 import ButtonPlus from "../../img/button+.svg"
 import ButtonChecked from "../../img/button-checked.svg"
 import style from "./Card.module.scss"
 
 type CardPropsType = {
+    id: string
     title: string
     price: number
     imageUrl: string
     onClickButtonFavorite: () => void
-    onClickButtonPlus: () => void
+    onClickButtonPlus: (cake: CardPropsType) => void
 }
 
 export const Card = (props: CardPropsType) => {
 
     const [isAdded, setIsAdded] = useState(false)
 
-    const onClickHandle = () => {
+    const onClickPlus = (cake: CardPropsType) => {
+        props.onClickButtonPlus(cake)
         setIsAdded(!isAdded)
     }
 
     useEffect(() => {
-        console.log("Переменная изменилась")
+        //console.log("Переменная изменилась")
     }, [isAdded])
+
 
     return (
         <div className={style.card}>
@@ -38,7 +41,7 @@ export const Card = (props: CardPropsType) => {
                 </div>
                 <img
                     className={style.plus}
-                    onClick={onClickHandle}
+                    onClick={() => onClickPlus(props)}
                     src={isAdded ? ButtonChecked : ButtonPlus}
                     alt="+"
                 />

@@ -45,12 +45,12 @@ export const Drawer = (props: DrawerPropsType) => {
                     {props.items.map(cake => (
                         <div className="cartItem d-flex align-center mb-30">
                             <div
-                                style={{backgroundImage: 'url(/cakes/praha.jpg)'}}
+                                style={{backgroundImage: `url(${cake.imageUrl})`}}
                                 className={"cartItemImg"}></div>
 
                             <div className={"mr-20 mb-15 flex"}>
-                                <p className={"mb-5"}>Прага</p>
-                                <b>3299 руб.</b>
+                                <p className={"mb-5"}>{cake.title}</p>
+                                <b>{cake.price} руб.</b>
                             </div>
                             <img className={"removeButton"} src={ButtonRemove} alt="remove"/>
                         </div>

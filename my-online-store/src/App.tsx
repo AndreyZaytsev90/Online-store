@@ -3,6 +3,7 @@ import {Card} from "./components/Card/Card";
 import {Header} from "./components/Header";
 import {Drawer} from "./components/Drawer";
 import Search from "./img/search.svg"
+import {log} from "util";
 
 export type CardsPropsType = {
     id: string
@@ -17,16 +18,13 @@ export type CardsPropsType = {
     {id: "3", title: "Наполеон", price: 5299, imageUrl: "Napoleon"},
 ]*/
 
-const onClickButtonPlus = () => {
-    console.log("Добавить в корзину")
-}
 
 function App() {
 
     const [items, setItems] = useState<Array<CardsPropsType>>([])
     const [cartItems, setCartItems] = useState<Array<CardsPropsType>>([
-        {"id":"1","title":"Прага","price":3299,"imageUrl":"/cakes/praha.jpg"},
-        {"id":"2","title":"Сникерс","price":4299,"imageUrl":"/cakes/snikers.jpg"}]) // массив для хранения товаров в корзине
+        /*{"id":"1","title":"Прага","price":3299,"imageUrl":"/cakes/praha.jpg"},
+        {"id":"2","title":"Сникерс","price":4299,"imageUrl":"/cakes/snikers.jpg"}*/]) // массив для хранения товаров в корзине
     const [cartOpened, setCartOpened] = useState(false)
 
     useEffect(() => {
@@ -37,6 +35,11 @@ function App() {
             setItems(json)
         })
     }, [])
+
+    const onAddToCard = (cake: CardsPropsType) => {
+        console.log(cake)
+       cake && setCartItems(prev => [...prev, cake]) // берем конкретное состояние и дололняем его новым объектом
+    }
 
 
     return (
@@ -59,11 +62,12 @@ function App() {
                     {items.map(cake =>
                         <Card
                             key={cake.id}
+                            id={cake.id}
                             title={cake.title}
                             price={cake.price}
                             imageUrl={cake.imageUrl}
                             onClickButtonFavorite={() => console.log("Добавить в закладки")}
-                            onClickButtonPlus={onClickButtonPlus}
+                            onClickButtonPlus={(cake) => onAddToCard(cake)}
                         />)}
                 </div>
             </div>
