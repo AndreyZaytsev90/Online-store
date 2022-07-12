@@ -5,7 +5,8 @@ import {CardsPropsType} from "../App";
 
 type DrawerPropsType = {
     onClose: () => void
-    items: Array<CardsPropsType>
+    cartItems: Array<CardsPropsType>
+    removeFromCart: (id: string) => void
 }
 
 export const Drawer = (props: DrawerPropsType) => {
@@ -17,32 +18,8 @@ export const Drawer = (props: DrawerPropsType) => {
                 </h2>
 
                 <div className="items" style={{"flex": 1}}>
-                    {/* <div className="cartItem d-flex align-center mb-30">
-                        <img className={"mr-20"}
-                             width={90}
-                             height={90}
-                             src= "/cakes/praha.jpg"
-                             alt="Прага"/>
-                        <div className={"mr-20 mb-15"}>
-                            <p className={"mb-5"}>Прага</p>
-                            <b>3299 руб.</b>
-                        </div>
-                        <img className={"removeButton"} src={ButtonRemove} alt="remove"/>
-                    </div>
 
-                    <div className="cartItem d-flex align-center mb-30">
-                        <img className={"mr-20"}
-                             width={90}
-                             height={90}
-                             src="/cakes/snikers.jpg"
-                             alt="Прага"/>
-                        <div className={"mr-20 mb-15"}>
-                            <p className={"mb-5"}>Сникерс</p>
-                            <b>3299 руб.</b>
-                        </div>
-                        <img className={"removeButton"} src={ButtonRemove} alt="remove"/>
-                    </div>*/}
-                    {props.items.map(cake => (
+                    {props.cartItems.map(cake => (
                         <div className="cartItem d-flex align-center mb-30">
                             <div
                                 style={{backgroundImage: `url(${cake.imageUrl})`}}
@@ -52,7 +29,9 @@ export const Drawer = (props: DrawerPropsType) => {
                                 <p className={"mb-5"}>{cake.title}</p>
                                 <b>{cake.price} руб.</b>
                             </div>
-                            <img className={"removeButton"} src={ButtonRemove} alt="remove"/>
+                            <img onClick={() => props.removeFromCart(cake.id)} className={"removeButton"}
+                                 src={ButtonRemove}
+                                 alt="remove"/>
                         </div>
                     ))}
                 </div>

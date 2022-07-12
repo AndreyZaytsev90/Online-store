@@ -3,7 +3,6 @@ import {Card} from "./components/Card/Card";
 import {Header} from "./components/Header";
 import {Drawer} from "./components/Drawer";
 import Search from "./img/search.svg"
-import {log} from "util";
 
 export type CardsPropsType = {
     id: string
@@ -12,19 +11,10 @@ export type CardsPropsType = {
     imageUrl: string
 }
 
-/*const cards: Array<CardsPropsType> = [
-    {id: "1", title: "Прага", price: 3299, imageUrl: "Praha"},
-    {id: "2", title: "Сникерс", price: 4299, imageUrl: "Snickers"},
-    {id: "3", title: "Наполеон", price: 5299, imageUrl: "Napoleon"},
-]*/
-
-
 function App() {
 
     const [items, setItems] = useState<Array<CardsPropsType>>([])
-    const [cartItems, setCartItems] = useState<Array<CardsPropsType>>([
-        /*{"id":"1","title":"Прага","price":3299,"imageUrl":"/cakes/praha.jpg"},
-        {"id":"2","title":"Сникерс","price":4299,"imageUrl":"/cakes/snikers.jpg"}*/]) // массив для хранения товаров в корзине
+    const [cartItems, setCartItems] = useState<Array<CardsPropsType>>([]) // массив для хранения товаров в корзине
     const [cartOpened, setCartOpened] = useState(false)
 
     useEffect(() => {
@@ -37,17 +27,22 @@ function App() {
     }, [])
 
     const onAddToCard = (cake: CardsPropsType) => {
-        console.log(cake)
-       cake && setCartItems(prev => [...prev, cake]) // берем конкретное состояние и дололняем его новым объектом
+       setCartItems(prev => [...prev, cake]) // берем конкретное состояние и дололняем его новым объектом
     }
 
+    const removeFromCart = (id: string) => {
+        setCartItems(cartItems.filter(obj => obj.id !== id))
+    }
 
     return (
         <div className="wrapper clear">
             {cartOpened ?
                 <Drawer
                     onClose={() => setCartOpened(false)}
-                    items={cartItems}/> : null}
+                    cartItems={cartItems}
+                    removeFromCart={removeFromCart}
+                /> : null}
+
             <Header setCartOpened={() => setCartOpened(true)}/>
             <div className={"content p-40 "}>
                 <div className={"d-flex align-center justify-between mb-40"}>
@@ -58,7 +53,6 @@ function App() {
                     </div>
                 </div>
                 <div className={"d-flex flex-wrap"}>
-
                     {items.map(cake =>
                         <Card
                             key={cake.id}
