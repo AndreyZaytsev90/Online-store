@@ -48,6 +48,33 @@ ul {
   width: 32px;
   cursor: pointer;
 }*/
+.cartEmpty {
+  text-align: center;
+
+  p {
+    width: 280px;
+    line-height: 24px;
+  }
+
+  .greenButton {
+    width: 245px;
+    margin-top: 20px;
+
+    &:hover {
+      img {
+        transform: translateX(-5px);
+      }
+    }
+
+    img {
+      position: relative;
+      top: 1px;
+      margin-right: 15px;
+
+      transition: transform 0.15s ease-in-out;
+    }
+  }
+}
 
 .search-block {
   border: 2px solid #F3F3F3;
@@ -106,6 +133,7 @@ ul {
   ul {
     display: block;
     margin-bottom: 40px !important;
+
     li {
       display: flex;
       align-items: flex-end;
@@ -121,6 +149,7 @@ ul {
       }
     }
   }
+
   .greenButton {
     position: relative;
 
