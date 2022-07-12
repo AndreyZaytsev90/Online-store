@@ -53,6 +53,15 @@ ul {
   border: 2px solid #F3F3F3;
   border-radius: 10px;
   padding: 0 15px;
+  position: relative;
+
+  .clear {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 25px;
+    height: 25px;
+  }
 
   input {
     border: 0;

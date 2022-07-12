@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import {Card} from "./components/Card/Card";
 import {Header} from "./components/Header";
 import {Drawer} from "./components/Drawer";
 import Search from "./img/search.svg"
+import ButtonRemove from "./img/button-remove.svg";
 
 export type CardsPropsType = {
     id: string
@@ -15,6 +16,7 @@ function App() {
 
     const [items, setItems] = useState<Array<CardsPropsType>>([])
     const [cartItems, setCartItems] = useState<Array<CardsPropsType>>([]) // массив для хранения товаров в корзине
+    const [searchValue, setSearchValue] = useState("")
     const [cartOpened, setCartOpened] = useState(false)
 
     useEffect(() => {
@@ -34,8 +36,16 @@ function App() {
         setCartItems(cartItems.filter(obj => obj.id !== id))
     }
 
+    const onChangeSearchInput = (event: ChangeEvent<HTMLInputElement> ) => {
+        setSearchValue(event.currentTarget.value)
+    }
+
+    const onClickSearchClear = () => {
+        setSearchValue("")
+    }
+
     return (
-        <div className="wrapper clear">
+        <div className="wrapper clear" key={"1"}>
             {cartOpened ?
                 <Drawer
                     onClose={() => setCartOpened(false)}
@@ -46,14 +56,15 @@ function App() {
             <Header setCartOpened={() => setCartOpened(true)}/>
             <div className={"content p-40 "}>
                 <div className={"d-flex align-center justify-between mb-40"}>
-                    <h1>Все рецепты</h1>
+                    <h1>{searchValue ? `Поиск по запросу "${searchValue}"`: `Все рецепты`}</h1>
                     <div className={"search-block d-flex"}>
                         <img src={Search} alt="search"/>
-                        <input type="text" placeholder={"Поиск..."}/>
+                        {searchValue && <img onClick={onClickSearchClear} className={"clear cu-p"} src={ButtonRemove} alt="clear"/>}
+                        <input value={searchValue} onChange={onChangeSearchInput} type="text" placeholder={"Поиск..."}/>
                     </div>
                 </div>
                 <div className={"d-flex flex-wrap"}>
-                    {items.map(cake =>
+                    {items.filter(item => item.title.toLowerCase().includes(searchValue.toLowerCase())).map(cake =>
                         <Card
                             key={cake.id}
                             id={cake.id}
