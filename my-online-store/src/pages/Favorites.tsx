@@ -1,22 +1,22 @@
 import React, {ChangeEvent} from 'react';
 import Search from "../img/search.svg";
 import ButtonRemove from "../img/button-remove.svg";
-import {CardsPropsType} from "../App";
+import {CakePropsType} from "../App";
 import {Card} from "../components/Card/Card";
 
 type FavoritesPropsType = {
     searchValue: string
     onClickSearchClear: () => void
     onChangeSearchInput: (event: ChangeEvent<HTMLInputElement>) => void
-    favorites: Array<CardsPropsType>
-    onAddToFavorite: (cake: CardsPropsType) => void
-    onAddToCard: (cake: CardsPropsType) => void
+    favorites: Array<CakePropsType>
+    onAddToFavorite: (cake: CakePropsType) => void
+    onAddToCard: (cake: CakePropsType) => void
 }
 
 export const Favorites = (props: FavoritesPropsType) => {
 
-    const onPlus = (cake: CardsPropsType) => props.onAddToCard(cake)
-    const onFavorite = (cake: CardsPropsType) => props.onAddToFavorite(cake)
+    const onPlus = (cake: CakePropsType) => props.onAddToCard(cake)
+    const onFavorite = (cake: CakePropsType) => props.onAddToFavorite(cake)
 
     return (
         <div className={"content p-40 "}>
@@ -35,11 +35,12 @@ export const Favorites = (props: FavoritesPropsType) => {
                 </div>
             </div>
             <div className={"d-flex flex-wrap"}>
-                {props.favorites ? props.favorites.filter(item => item.title.toLowerCase().includes(props.searchValue.toLowerCase())).map(f =>
-                    <Card id={f.id}
-                          title={f.title}
-                          price={f.price}
-                          imageUrl={f.imageUrl}
+                {props.favorites ? props.favorites.filter(item => item.title.toLowerCase().includes(props.searchValue.toLowerCase())).map(item =>
+                    <Card key={item.id}
+                          id={item.id}
+                          title={item.title}
+                          price={item.price}
+                          imageUrl={item.imageUrl}
                           onPlus={onPlus}
                           onFavorite={onFavorite}
                           favorited={true}

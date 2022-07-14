@@ -8,8 +8,9 @@ import Search from "./img/search.svg"
 import ButtonRemove from "./img/button-remove.svg";
 import {Home} from "./pages/Home";
 import {Favorites} from "./pages/Favorites";
+import retryTimes = jest.retryTimes;
 
-export type CardsPropsType = {
+export type CakePropsType = {
     id: string
     title: string
     price: number
@@ -18,9 +19,9 @@ export type CardsPropsType = {
 
 function App() {
 
-    const [items, setItems] = useState<Array<CardsPropsType>>([])
-    const [cartItems, setCartItems] = useState<Array<CardsPropsType>>([]) // массив для хранения товаров в корзине
-    const [favorites, setFavorites] = useState<Array<CardsPropsType>>([]) // массив для хранения понравившихся товаров
+    const [items, setItems] = useState<Array<CakePropsType>>([])
+    const [cartItems, setCartItems] = useState<Array<CakePropsType>>([]) // массив для хранения товаров в корзине
+    const [favorites, setFavorites] = useState<Array<CakePropsType>>([]) // массив для хранения понравившихся товаров
     const [searchValue, setSearchValue] = useState("")
     const [cartOpened, setCartOpened] = useState(false)
 
@@ -42,20 +43,28 @@ function App() {
         })
     }, [])
 
-    const onAddToCard = (cake: CardsPropsType) => {
+    const onAddToCard = (cake: CakePropsType) => {
         axios.post("https://62c95eb84795d2d81f7bb094.mockapi.io/cart", cake)
         setCartItems(prev => [...prev, cake]) // берем конкретное состояние и дололняем его новым объектом
     }
 
     const removeFromCart = (id: string) => {
         axios.delete(`https://62c95eb84795d2d81f7bb094.mockapi.io/cart/${id}`)
-        // setCartItems(cartItems.filter(obj => obj.id !== id))
         setCartItems((prev) => prev.filter(item => item.id !== id))
     }
 
-    const onAddToFavorite = (cake: CardsPropsType) => {
-        axios.post("https://62c95eb84795d2d81f7bb094.mockapi.io/favorite", cake)
-        setFavorites(prev => [...prev, cake]) // берем конкретное состояние и дололняем его новым объектом
+    const onAddToFavorite = async (cake: CakePropsType) => {
+        try {
+            if (favorites.find((item) => item.id === cake.id)) {
+                axios.delete(`https://62c95eb84795d2d81f7bb094.mockapi.io/favorite/${cake.id}`)
+                setFavorites(prev => prev.filter(item => item.id !== cake.id))
+            } else {
+                const {data} = await axios.post("https://62c95eb84795d2d81f7bb094.mockapi.io/favorite", cake)
+                setFavorites(prev => [...prev, data]) // data - это свойство объекта response
+            }
+        } catch (error) {
+            alert("Не удалось добавить в закладки")
+        }
     }
 
     const onChangeSearchInput = (event: ChangeEvent<HTMLInputElement>) => {

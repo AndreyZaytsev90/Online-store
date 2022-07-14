@@ -3,11 +3,11 @@ import ButtonRemove from "../img/button-remove.svg"
 import Arrow from "../img/arrow.svg"
 import BackArrow from "../img/backArrow.svg"
 import EmptyCart from "../img/empty-cart.svg"
-import {CardsPropsType} from "../App";
+import {CakePropsType} from "../App";
 
 type DrawerPropsType = {
     onClose: () => void
-    cartItems: Array<CardsPropsType>
+    cartItems: Array<CakePropsType>
     removeFromCart: (id: string) => void
 }
 
