@@ -14,6 +14,10 @@ type HomePropsType = {
 }
 
 export const Home = (props: HomePropsType) => {
+
+    const onPlus = (cake: CardsPropsType) => props.onAddToCard(cake)
+    const onFavorite = (cake: CardsPropsType) => props.onAddToFavorite(cake)
+
     return (
         <div className={"content p-40 "}>
             <div className={"d-flex align-center justify-between mb-40"}>
@@ -22,7 +26,8 @@ export const Home = (props: HomePropsType) => {
                     <img src={Search} alt="search"/>
                     {props.searchValue &&
                      <img onClick={props.onClickSearchClear} className={"clear cu-p"} src={ButtonRemove} alt="clear"/>}
-                    <input value={props.searchValue} onChange={props.onChangeSearchInput} type="text" placeholder={"Поиск..."}/>
+                    <input value={props.searchValue} onChange={props.onChangeSearchInput} type="text"
+                           placeholder={"Поиск..."}/>
                 </div>
             </div>
             <div className={"d-flex flex-wrap"}>
@@ -33,8 +38,8 @@ export const Home = (props: HomePropsType) => {
                         title={cake.title}
                         price={cake.price}
                         imageUrl={cake.imageUrl}
-                        onFavorite={(cake) => props.onAddToFavorite(cake)}
-                       onPlus={(cake) => props.onAddToCard(cake)}
+                        onPlus={onPlus}
+                        onFavorite={onFavorite}
                     />)}
             </div>
         </div>

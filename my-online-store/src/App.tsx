@@ -81,13 +81,10 @@ function App() {
             <Routes>
                 <Route path={"/favorites"} element={<Favorites favorites={favorites}
                                                                searchValue={searchValue}
-                                                               onClickSearchClear={onClickSearchClear}
-                                                               onChangeSearchInput={onChangeSearchInput}
-                                                               onAddToFavorite={onAddToFavorite}
                                                                onAddToCard={onAddToCard}
-                                                               onPlus={(cake) => onAddToCard(cake)}
-                                                               onFavorite={(cake) => onAddToFavorite(cake)}
-                />}>
+                                                               onAddToFavorite={onAddToFavorite}
+                                                               onChangeSearchInput={onChangeSearchInput}
+                                                               onClickSearchClear={onClickSearchClear}/>}>
                 </Route>
                 <Route path={"/home"} element={<Home items={items}
                                                      searchValue={searchValue}
@@ -97,7 +94,6 @@ function App() {
                                                      onClickSearchClear={onClickSearchClear}/>}>
                 </Route>
             </Routes>
-
         </div>
     );
 }

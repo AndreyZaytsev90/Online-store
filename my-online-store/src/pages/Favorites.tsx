@@ -9,13 +9,15 @@ type FavoritesPropsType = {
     onClickSearchClear: () => void
     onChangeSearchInput: (event: ChangeEvent<HTMLInputElement>) => void
     favorites: Array<CardsPropsType>
-    onFavorite: (cake: CardsPropsType) => void
-    onPlus: (cake: CardsPropsType) => void
     onAddToFavorite: (cake: CardsPropsType) => void
     onAddToCard: (cake: CardsPropsType) => void
 }
 
 export const Favorites = (props: FavoritesPropsType) => {
+
+    const onPlus = (cake: CardsPropsType) => props.onAddToCard(cake)
+    const onFavorite = (cake: CardsPropsType) => props.onAddToFavorite(cake)
+
     return (
         <div className={"content p-40 "}>
             <div className={"d-flex align-center justify-between mb-40"}>
@@ -38,8 +40,8 @@ export const Favorites = (props: FavoritesPropsType) => {
                           title={f.title}
                           price={f.price}
                           imageUrl={f.imageUrl}
-                          onPlus={(cake) => props.onAddToCard(cake)}
-                          onFavorite={(cake) => props.onAddToFavorite(cake)}
+                          onPlus={onPlus}
+                          onFavorite={onFavorite}
                           favorited={true}
                     />) : null}
             </div>

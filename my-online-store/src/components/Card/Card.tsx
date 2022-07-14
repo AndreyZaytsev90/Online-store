@@ -4,6 +4,7 @@ import HeartLiked from "../../img/heart-liked.svg"
 import ButtonPlus from "../../img/button+.svg"
 import ButtonChecked from "../../img/button-checked.svg"
 import style from "./Card.module.scss"
+import {CardsPropsType} from "../../App";
 
 type CardPropsType = {
     id: string
@@ -11,7 +12,7 @@ type CardPropsType = {
     price: number
     imageUrl: string
     onFavorite: (cake: CardPropsType) => void
-    onPlus: (cake: CardPropsType) => void
+    onPlus: (cake: CardsPropsType) => void
     favorited?: boolean
 }
 
@@ -20,7 +21,7 @@ export const Card = (props: CardPropsType) => {
     const [isAdded, setIsAdded] = useState(false)
     const [isFavorite, setIsFavorite] = useState<boolean | undefined>(props.favorited)
 
-    const onClickPlus = (cake: CardPropsType) => {
+    const onClickPlus = (cake: CardsPropsType) => {
         props.onPlus(cake)
         setIsAdded(!isAdded)
     }
