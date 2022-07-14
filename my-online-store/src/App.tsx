@@ -1,10 +1,13 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
+import {Routes, Route} from "react-router-dom";
 import axios from "axios";
 import {Card} from "./components/Card/Card";
 import {Header} from "./components/Header";
 import {Drawer} from "./components/Drawer";
 import Search from "./img/search.svg"
 import ButtonRemove from "./img/button-remove.svg";
+import {Home} from "./pages/Home";
+import {Favorites} from "./pages/Favorites";
 
 export type CardsPropsType = {
     id: string
@@ -17,6 +20,7 @@ function App() {
 
     const [items, setItems] = useState<Array<CardsPropsType>>([])
     const [cartItems, setCartItems] = useState<Array<CardsPropsType>>([]) // массив для хранения товаров в корзине
+    const [favorites, setFavorites] = useState<Array<CardsPropsType>>([]) // массив для хранения понравившихся товаров
     const [searchValue, setSearchValue] = useState("")
     const [cartOpened, setCartOpened] = useState(false)
 
@@ -33,6 +37,9 @@ function App() {
         axios.get("https://62c95eb84795d2d81f7bb094.mockapi.io/cart").then(res => {
             setCartItems(res.data)
         })
+        axios.get("https://62c95eb84795d2d81f7bb094.mockapi.io/favorite").then(res => {
+            setFavorites(res.data)
+        })
     }, [])
 
     const onAddToCard = (cake: CardsPropsType) => {
@@ -42,8 +49,13 @@ function App() {
 
     const removeFromCart = (id: string) => {
         axios.delete(`https://62c95eb84795d2d81f7bb094.mockapi.io/cart/${id}`)
-       // setCartItems(cartItems.filter(obj => obj.id !== id))
+        // setCartItems(cartItems.filter(obj => obj.id !== id))
         setCartItems((prev) => prev.filter(item => item.id !== id))
+    }
+
+    const onAddToFavorite = (cake: CardsPropsType) => {
+        axios.post("https://62c95eb84795d2d81f7bb094.mockapi.io/favorite", cake)
+        setFavorites(prev => [...prev, cake]) // берем конкретное состояние и дололняем его новым объектом
     }
 
     const onChangeSearchInput = (event: ChangeEvent<HTMLInputElement>) => {
@@ -63,30 +75,29 @@ function App() {
                     removeFromCart={removeFromCart}
                 /> : null}
 
+
             <Header setCartOpened={() => setCartOpened(true)}/>
-            <div className={"content p-40 "}>
-                <div className={"d-flex align-center justify-between mb-40"}>
-                    <h1>{searchValue ? `Поиск по запросу "${searchValue}"` : `Все рецепты`}</h1>
-                    <div className={"search-block d-flex"}>
-                        <img src={Search} alt="search"/>
-                        {searchValue &&
-                            <img onClick={onClickSearchClear} className={"clear cu-p"} src={ButtonRemove} alt="clear"/>}
-                        <input value={searchValue} onChange={onChangeSearchInput} type="text" placeholder={"Поиск..."}/>
-                    </div>
-                </div>
-                <div className={"d-flex flex-wrap"}>
-                    {items.filter(item => item.title.toLowerCase().includes(searchValue.toLowerCase())).map(cake =>
-                        <Card
-                            key={cake.id}
-                            id={cake.id}
-                            title={cake.title}
-                            price={cake.price}
-                            imageUrl={cake.imageUrl}
-                            onClickButtonFavorite={() => console.log("Добавить в закладки")}
-                            onClickButtonPlus={(cake) => onAddToCard(cake)}
-                        />)}
-                </div>
-            </div>
+
+            <Routes>
+                <Route path={"/favorites"} element={<Favorites favorites={favorites}
+                                                               searchValue={searchValue}
+                                                               onClickSearchClear={onClickSearchClear}
+                                                               onChangeSearchInput={onChangeSearchInput}
+                                                               onAddToFavorite={onAddToFavorite}
+                                                               onAddToCard={onAddToCard}
+                                                               onPlus={(cake) => onAddToCard(cake)}
+                                                               onFavorite={(cake) => onAddToFavorite(cake)}
+                />}>
+                </Route>
+                <Route path={"/home"} element={<Home items={items}
+                                                     searchValue={searchValue}
+                                                     onAddToCard={onAddToCard}
+                                                     onAddToFavorite={onAddToFavorite}
+                                                     onChangeSearchInput={onChangeSearchInput}
+                                                     onClickSearchClear={onClickSearchClear}/>}>
+                </Route>
+            </Routes>
+
         </div>
     );
 }

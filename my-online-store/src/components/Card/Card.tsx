@@ -1,5 +1,6 @@
 import React, {useEffect, useState, MouseEvent} from 'react';
 import HeartUnliked from "../../img/heart-unliked.svg"
+import HeartLiked from "../../img/heart-liked.svg"
 import ButtonPlus from "../../img/button+.svg"
 import ButtonChecked from "../../img/button-checked.svg"
 import style from "./Card.module.scss"
@@ -9,17 +10,24 @@ type CardPropsType = {
     title: string
     price: number
     imageUrl: string
-    onClickButtonFavorite: () => void
-    onClickButtonPlus: (cake: CardPropsType) => void
+    onFavorite: (cake: CardPropsType) => void
+    onPlus: (cake: CardPropsType) => void
+    favorited?: boolean
 }
 
 export const Card = (props: CardPropsType) => {
 
     const [isAdded, setIsAdded] = useState(false)
+    const [isFavorite, setIsFavorite] = useState<boolean | undefined>(props.favorited)
 
     const onClickPlus = (cake: CardPropsType) => {
-        props.onClickButtonPlus(cake)
+        props.onPlus(cake)
         setIsAdded(!isAdded)
+    }
+
+    const onClickFavorite = (cake: CardPropsType) => {
+        props.onFavorite(cake)
+        setIsFavorite(!isFavorite)
     }
 
     useEffect(() => {
@@ -30,7 +38,10 @@ export const Card = (props: CardPropsType) => {
     return (
         <div className={style.card}>
             <div className={style.favorite}>
-                <img src={HeartUnliked} alt="heart-unliked" onClick={props.onClickButtonFavorite}/>
+                <img src={isFavorite ? HeartLiked : HeartUnliked}
+                     alt="heart-unliked"
+                     onClick={() => onClickFavorite(props)}
+                />
             </div>
             <img className={"ml-10"} width={133} height={112} src={props.imageUrl} alt="Прага"/>
             <h5>{props.title}</h5>
