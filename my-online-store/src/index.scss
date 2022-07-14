@@ -38,16 +38,6 @@ ul {
   }
 }
 
-
-/*.button {
-  box-sizing: border-box;
-  background: #FFFFFF;
-  border: 1px solid #F2F2F2;
-  border-radius: 8px;
-  height: 32px;
-  width: 32px;
-  cursor: pointer;
-}*/
 .cartEmpty {
   text-align: center;
 
@@ -194,6 +184,8 @@ ul {
   border-radius: 20px;
   overflow: hidden;
   padding: 0 20px;
+
+ // margin-top: 200px;
 
   p {
     font-size: 16px;
