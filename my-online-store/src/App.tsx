@@ -1,14 +1,10 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
 import {Routes, Route} from "react-router-dom";
 import axios from "axios";
-import {Card} from "./components/Card/Card";
 import {Header} from "./components/Header";
 import {Drawer} from "./components/Drawer";
-import Search from "./img/search.svg"
-import ButtonRemove from "./img/button-remove.svg";
 import {Home} from "./pages/Home";
 import {Favorites} from "./pages/Favorites";
-import retryTimes = jest.retryTimes;
 
 export type CakePropsType = {
     id: string
@@ -43,10 +39,18 @@ function App() {
         })
     }, [])
 
-    const onAddToCard = (cake: CakePropsType) => {
-        axios.post("https://62c95eb84795d2d81f7bb094.mockapi.io/cart", cake)
-        setCartItems(prev => [...prev, cake]) // берем конкретное состояние и дололняем его новым объектом
-    }
+    const onAddToCard = async (cake: CakePropsType) => {
+        try {
+            if (cartItems.find((item) => item.id === cake.id)) {
+                axios.delete(`https://62c95eb84795d2d81f7bb094.mockapi.io/cart/${cake.id}`)
+                setCartItems(prev => prev.filter(item => item.id !== cake.id))
+            } else {
+                axios.post("https://62c95eb84795d2d81f7bb094.mockapi.io/cart", cake)
+                setCartItems(prev => [...prev, cake]) // берем конкретное состояние и дололняем его новым объектом
+            }
+        } catch (error) {
+            alert("Не удалось добавить в корзину")
+    }}
 
     const removeFromCart = (id: string) => {
         axios.delete(`https://62c95eb84795d2d81f7bb094.mockapi.io/cart/${id}`)
@@ -107,6 +111,4 @@ function App() {
     );
 }
 
-export default App;
-
-
+export default App
