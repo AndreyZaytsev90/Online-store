@@ -42,10 +42,11 @@ function App() {
     const onAddToCard = async (cake: CakePropsType) => {
         try {
             if (cartItems.find((item) => item.id === cake.id)) {
+
                 axios.delete(`https://62c95eb84795d2d81f7bb094.mockapi.io/cart/${cake.id}`)
                 setCartItems(prev => prev.filter(item => item.id !== cake.id))
             } else {
-                axios.post("https://62c95eb84795d2d81f7bb094.mockapi.io/cart", cake)
+                 axios.post("https://62c95eb84795d2d81f7bb094.mockapi.io/cart", cake)
                 setCartItems(prev => [...prev, cake]) // берем конкретное состояние и дололняем его новым объектом
             }
         } catch (error) {
