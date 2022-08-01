@@ -43,10 +43,10 @@ function App() {
         try {
             if (cartItems.find((item) => item.id === cake.id)) {
 
-                axios.delete(`https://62c95eb84795d2d81f7bb094.mockapi.io/cart/${cake.id}`)
+                await axios.delete(`https://62c95eb84795d2d81f7bb094.mockapi.io/cart/${cake.id}`)
                 setCartItems(prev => prev.filter(item => item.id !== cake.id))
             } else {
-                 axios.post("https://62c95eb84795d2d81f7bb094.mockapi.io/cart", cake)
+                 await axios.post("https://62c95eb84795d2d81f7bb094.mockapi.io/cart", cake)
                 setCartItems(prev => [...prev, cake]) // берем конкретное состояние и дололняем его новым объектом
             }
         } catch (error) {
@@ -61,7 +61,7 @@ function App() {
     const onAddToFavorite = async (cake: CakePropsType) => {
         try {
             if (favorites.find((item) => item.id === cake.id)) {
-                axios.delete(`https://62c95eb84795d2d81f7bb094.mockapi.io/favorite/${cake.id}`)
+                await axios.delete(`https://62c95eb84795d2d81f7bb094.mockapi.io/favorite/${cake.id}`)
                 setFavorites(prev => prev.filter(item => item.id !== cake.id))
             } else {
                 const {data} = await axios.post("https://62c95eb84795d2d81f7bb094.mockapi.io/favorite", cake)
